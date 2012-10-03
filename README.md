@@ -15,13 +15,13 @@ Usage: https://github.com/netzpirat/guard-jasmine#usage
 
 Install guide: https://github.com/netzpirat/guard-jasmine#phantomjs
 
-Massive caveat: Jenkins doesn't source the PATH from ~./profile or /etc/profile or anywhere meaningful it seems, so in order to be able to use Homebrew installed PhantomJS you'll have to manually paste the contents of your $PATH (for example `/usr/local/bin:$PATH` + rbenv or rvm related bits if needed) into Jenkins Dashboard > Manage Jenkins > Configure System > Global properties / Environment variables > PATH.
+Massive caveat: Jenkins doesn't source the PATH from `~./profile` or `/etc/profile` or anywhere meaningful it seems, so in order to be able to use Homebrew installed PhantomJS you'll have to manually paste the contents of your $PATH (for example `/usr/local/bin:$PATH` + rbenv or rvm related bits if needed) into Jenkins Dashboard > Manage Jenkins > Configure System > Global properties / Environment variables > PATH.
 
 ## Command line execution
 
 Running the test suite and generating the report can be as easy as one line in the Terminal:
 
-`bundle exec guard-jasmine -p 8888 -u http://localhost:8888/ --console=never 2>&1 | perl -pe 's/\e\[?.*?[\@-~]//g' | libs/guard-jasmine2junit.rb`
+`bundle exec guard-jasmine -p 8888 -u http://localhost:8888/ --console=never 2>&1 | guard-jasmine2junit.rb`
 
 …unfortunately it's a no go on Jenkins as it can't handle piping so on to:
 
