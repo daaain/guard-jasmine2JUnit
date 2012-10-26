@@ -47,30 +47,19 @@ class ReportParser
   def parse_input
     @piped_input.each do |piped_row|
       puts piped_row
-      case piped_row
-        
-        when /Finished in (\d+\.\d*) seconds/
-          handle_start_tests($1.to_s)
-
-        when /(\d*) specs, (\d*) failures/
-          handle_end_tests($1.to_i, $2.to_i)
-      end
+      @elapsed_time = $1 if piped_row =~ /Finished in (\d+\.\d*) second/
+      @total_test_cases = $1.to_i if piped_row =~ /(\d*) spec/
+      @total_failed_test_cases = $1.to_i if piped_row =~ /(\d*) failure/
     end
+    handle_end_tests
   end
 
-  def handle_start_tests(time)
-    @elapsed_time = time
-  end
-
-  def handle_end_tests(specs, failures)
-    @total_passed_test_cases = specs - failures
-    @total_failed_test_cases = failures
+  def handle_end_tests
+    @total_passed_test_cases = @total_test_cases - @total_failed_test_cases
     
     current_file = File.open("#{TEST_REPORTS_FOLDER}/TEST-jasmine.xml", 'w')
     
-    test_duration = @elapsed_time
-    total_tests = @total_failed_test_cases + @total_passed_test_cases
-    suite_info = '<testsuite disabled="0" skipped="0" hostname="" id="" errors="0" failures="'+@total_failed_test_cases.to_s+'" tests="'+total_tests.to_s+'" time="'+test_duration.to_s+'" timestamp="'+Time.now.to_s+"\">\n"
+    suite_info = '<testsuite disabled="0" skipped="0" hostname="" id="" errors="0" failures="'+@total_failed_test_cases.to_s+'" tests="'+@total_test_cases.to_s+'" time="'+@elapsed_time+'" timestamp="'+Time.now.to_s+"\">\n"
     
     current_file << "<?xml version='1.0' encoding='UTF-8' ?>\n"
     current_file << suite_info
