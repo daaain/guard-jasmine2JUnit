@@ -7,8 +7,8 @@
 # bundle exec guard-jasmine -p 8888 -u http://localhost:8888/ --console=never 2>&1 | perl -pe 's/\e\[?.*?[\@-~]//g' | guard-jasmine2junit.rb
 #
 # All output is just passed through to stdout so you don't miss a thing!
-# Console output colours are stripped to make parsing safer, but Jenkins doesn't display colour codes anyway.
 # JUnit style XML-report are put in the folder specified below.
+# Note: the folder is being deleted and recreated every time so be careful if something else uses that folder too!
 #
 # Acknowledgement:
 # Based on ocunit2junit.rb by Christian Hedin <christian.hedin@jayway.com>

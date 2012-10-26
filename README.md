@@ -11,6 +11,8 @@ Install guide: https://github.com/netzpirat/guard-jasmine#installation
 
 Usage: https://github.com/netzpirat/guard-jasmine#usage
 
+For Grunt based environments / build chains this seems like a good alternative: https://github.com/jasmine-contrib/grunt-jasmine-runner
+
 ### PhantomJS
 
 Install guide: https://github.com/netzpirat/guard-jasmine#phantomjs
