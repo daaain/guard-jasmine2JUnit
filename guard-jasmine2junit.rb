@@ -55,6 +55,11 @@ class ReportParser
   end
 
   def handle_end_tests
+    if @elapsed_time.nil? || @total_test_cases.nil? || @total_failed_test_cases.nil?
+      puts "guard-jasmine2JUnit error: Missing information in JUnit output, have the tests run successfully?"
+      return
+    end
+
     @total_passed_test_cases = @total_test_cases - @total_failed_test_cases
     
     current_file = File.open("#{TEST_REPORTS_FOLDER}/TEST-jasmine.xml", 'w')
